@@ -34,7 +34,7 @@ public class TestRunner {
                 try {
                     method.invoke(testClass);
                 } catch (Exception e) {
-                    System.out.println(String.format(EXCEPTION_ERR_MSG, Before.class.getName(), method.getName(), e.getMessage()));
+                    System.out.println(String.format(EXCEPTION_ERR_MSG, Before.class.getName(), method.getName(), e.getCause()));
                 }
             });
 
@@ -51,7 +51,7 @@ public class TestRunner {
                 try {
                     method.invoke(testClass);
                 } catch (Exception e) {
-                    System.out.println(String.format(EXCEPTION_ERR_MSG, After.class.getName(), method.getName(), e.getMessage()));
+                    System.out.println(String.format(EXCEPTION_ERR_MSG, After.class.getName(), method.getName(), e.getCause()));
                 }
             });
         }
