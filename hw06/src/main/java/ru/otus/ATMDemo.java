@@ -1,21 +1,28 @@
 package ru.otus;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Pair;
 import ru.otus.enums.NominalEnum;
 import ru.otus.model.ATM;
-import ru.otus.model.ATMImpl;
+import ru.otus.model.Banknote;
+import ru.otus.model.impl.ATMImpl;
+import ru.otus.model.impl.BanknoteImpl;
 
 public class ATMDemo {
 
     public static void main(String[] args) {
-        ATM atm = new ATMImpl();
+        ATM atm = new ATMImpl(
+            Arrays.stream(NominalEnum.values()).toList()
+        );
+
         atm.topUp(List.of(
-            NominalEnum.ONE,
-            NominalEnum.ONE,
-            NominalEnum.ONE,
-            NominalEnum.TWO,
-            NominalEnum.FIVE
+            new BanknoteImpl(NominalEnum.ONE),
+            new BanknoteImpl(NominalEnum.ONE),
+            new BanknoteImpl(NominalEnum.ONE),
+            new BanknoteImpl(NominalEnum.TWO),
+            new BanknoteImpl(NominalEnum.FIVE)
         ));
 
         withdrawWithInfo(atm, 2);
@@ -29,8 +36,8 @@ public class ATMDemo {
         System.out.println("Trying to withdraw: " + amount);
 
         try {
-            var withdrawnPairs = atm.withdraw(amount);
-            printWithdrawnPairs(withdrawnPairs);
+            var withdrawnBanknotes = atm.withdraw(amount);
+            printWithdrawnBanknotesAsPairs(withdrawnBanknotes);
         } catch (RuntimeException exception) {
             System.out.println(exception.getMessage());
         }
@@ -39,13 +46,16 @@ public class ATMDemo {
         System.out.println("================================================");
     }
 
-    private static void printWithdrawnPairs(List<Pair<NominalEnum, Integer>> withdrawnPairs) {
-        withdrawnPairs.forEach(withdrawnPair ->
-            System.out.println(
-                "Nominal " +
-                    withdrawnPair.getKey().getValue() +
-                    " count = " +
-                    withdrawnPair.getValue()));
+    private static void printWithdrawnBanknotesAsPairs(List<Banknote> withdrawnBanknotes) {
+        var banknotesGrouped = withdrawnBanknotes
+            .stream()
+            .collect(Collectors.groupingBy(Banknote::getNominalValue));
+
+        banknotesGrouped.forEach((key, value) -> System.out.println(
+            "Nominal " +
+                key +
+                " count = " +
+                value.size()));
     }
 
 }

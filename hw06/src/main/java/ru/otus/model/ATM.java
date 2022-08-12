@@ -1,13 +1,12 @@
 package ru.otus.model;
 
 import java.util.List;
-import org.apache.commons.lang3.tuple.Pair;
-import ru.otus.enums.NominalEnum;
+import ru.otus.model.impl.BanknoteImpl;
 
 public interface ATM {
-    void topUp(List<NominalEnum> banknotes);
+    void topUp(List<Banknote> banknotes);
 
-    List<Pair<NominalEnum, Integer>> withdraw(int amount);
+    List<Banknote> withdraw(int amount);
 
     int getBalance();
 }
