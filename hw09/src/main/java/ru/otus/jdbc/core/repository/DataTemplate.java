@@ -1,11 +1,12 @@
 package ru.otus.jdbc.core.repository;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public interface DataTemplate<T> {
-    Optional<T> findById(Connection connection, long id);
+    Optional<T> findById(Connection connection, long id) throws SQLException;
 
     List<T> findAll(Connection connection);
 
