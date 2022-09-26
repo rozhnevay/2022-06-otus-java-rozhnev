@@ -1,7 +1,7 @@
-package ru.otus.cache;
+package ru.otus.cachehw;
 
 
-public class MyCache<K, V> implements ru.otus.cachehw.HwCache<K, V> {
+public class MyCache<K, V> implements HwCache<K, V> {
 //Надо реализовать эти методы
 
     @Override
@@ -20,12 +20,12 @@ public class MyCache<K, V> implements ru.otus.cachehw.HwCache<K, V> {
     }
 
     @Override
-    public void addListener(ru.otus.cachehw.HwListener<K, V> listener) {
+    public void addListener(HwListener<K, V> listener) {
 
     }
 
     @Override
-    public void removeListener(ru.otus.cachehw.HwListener<K, V> listener) {
+    public void removeListener(HwListener<K, V> listener) {
 
     }
 }
