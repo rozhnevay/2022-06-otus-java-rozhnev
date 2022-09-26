@@ -1,4 +1,4 @@
-## Результат работы DbServiceDemo
+## Результат работы DbServiceDemo - после включения кэша, запрос в БД улетел только один раз, остальное - из кэша
 
 ```shell
 Hibernate: select client0_.id as id1_0_0_, client0_.name as name2_0_0_ from client client0_ where client0_.id=?
