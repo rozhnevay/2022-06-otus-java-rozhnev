@@ -36,13 +36,6 @@ public class Client implements Cloneable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "address_id")
-    private Address address;
-
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "client")
-    private List<Phone> phones;
-
     public Client(String name) {
         this.id = null;
         this.name = name;
@@ -52,27 +45,9 @@ public class Client implements Cloneable {
         this.id = id;
         this.name = name;
     }
-
-    public Client(Long id, String name, Address address, List<Phone> phones) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phones = phones;
-        phones.forEach(phone -> phone.setClient(this));
-    }
-
     @Override
     public Client clone() {
-        return new Client(this.id, this.name, this.address, this.phones);
+        return new Client(this.id, this.name);
     }
 
-    @Override
-    public String toString() {
-        return "Client{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", address='" + this.address + '\'' +
-            ", phones='" + this.phones.stream().map(Phone::getNumber).reduce((x, y) -> String.join(",", x, y)) + '\'' +
-            '}';
-    }
 }
