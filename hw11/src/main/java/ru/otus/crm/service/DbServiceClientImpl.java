@@ -25,7 +25,7 @@ public class DbServiceClientImpl implements DBServiceClient {
     public DbServiceClientImpl(TransactionManager transactionManager, DataTemplate<Client> clientDataTemplate, boolean useCache) {
         this.transactionManager = transactionManager;
         this.clientDataTemplate = clientDataTemplate;
-        this.cache = new MyCache<>(initEhcache());
+        this.cache = new MyCache<>();
         this.useCache = useCache;
     }
 
@@ -78,15 +78,5 @@ public class DbServiceClientImpl implements DBServiceClient {
             log.info("clientList:{}", clientList);
             return clientList;
         });
-    }
-
-    private Cache initEhcache() {
-        var cacheManager = CacheManagerBuilder.newCacheManagerBuilder().build(true);
-
-
-        return cacheManager.createCache("Cache",
-            CacheConfigurationBuilder.newCacheConfigurationBuilder(Long.class, Client.class,
-                ResourcePoolsBuilder.heap(5))
-                .build());
     }
 }
