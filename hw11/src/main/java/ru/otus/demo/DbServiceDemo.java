@@ -3,6 +3,7 @@ package ru.otus.demo;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.cachehw.HwCache;
 import ru.otus.core.repository.DataTemplateHibernate;
 import ru.otus.core.repository.HibernateUtils;
 import ru.otus.core.sessionmanager.TransactionManagerHibernate;
@@ -31,20 +32,21 @@ public class DbServiceDemo {
 ///
         var clientTemplate = new DataTemplateHibernate<>(Client.class);
 ///
-        var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
-        dbServiceClient.saveClient(new Client("dbServiceFirst"));
+        var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate, false);
+        var savedClient = dbServiceClient.saveClient(new Client("dbServiceFirst"));
 
-        var clientSecond = dbServiceClient.saveClient(new Client("dbServiceSecond"));
-        var clientSecondSelected = dbServiceClient.getClient(clientSecond.getId())
-                .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecond.getId()));
-        log.info("clientSecondSelected:{}", clientSecondSelected);
-///
-        dbServiceClient.saveClient(new Client(clientSecondSelected.getId(), "dbServiceSecondUpdated"));
-        var clientUpdated = dbServiceClient.getClient(clientSecondSelected.getId())
-                .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecondSelected.getId()));
-        log.info("clientUpdated:{}", clientUpdated);
+        for (var i = 0; i < 3; i++) {
+            dbServiceClient.getClient(savedClient.getId())
+                .orElseThrow(() -> new RuntimeException("Client not found, id:" + savedClient.getId()));
+        }
 
-        log.info("All clients");
-        dbServiceClient.findAll().forEach(client -> log.info("client:{}", client));
+        log.info("====================");
+
+        dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate, true);
+
+        for (var i = 0; i < 3; i++) {
+            dbServiceClient.getClient(savedClient.getId())
+                .orElseThrow(() -> new RuntimeException("Client not found, id:" + savedClient.getId()));
+        }
     }
 }
