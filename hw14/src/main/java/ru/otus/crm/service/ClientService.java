@@ -5,7 +5,7 @@ import ru.otus.crm.model.Client;
 import java.util.List;
 import java.util.Optional;
 
-public interface DBServiceClient {
+public interface ClientService {
 
     Client saveClient(Client client);
 
