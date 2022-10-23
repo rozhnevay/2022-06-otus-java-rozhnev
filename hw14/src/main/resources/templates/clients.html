@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Клиенты</title>
+    <script>
+        function createClient() {
+            const clientNameTextBox = document.getElementById('clientNameTextBox');
+            fetch('api/client', {
+                method: "POST",
+                body: JSON.stringify({name: clientNameTextBox.value})
+            })
+            .then(response => response.json());
+        }
+    </script>
+</head>
+
+<body>
+<h4>Создать клиента</h4>
+<input type="text" id="clientNameTextBox" value="Вася" placeholder="Введите имя пользователя">
+<button onclick="createClient()">Создать</button>
+
+<p>
+    <span text="Список клиентов"></span>
+</p>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+        <#list clients as client>
+        <tr>
+            <td style="width: 100px">${client.id}</td>
+            <td style="width: 100px">${client.name}</td>
+        </tr>
+        </#list>
+    </table>
+</body>
+</html>
