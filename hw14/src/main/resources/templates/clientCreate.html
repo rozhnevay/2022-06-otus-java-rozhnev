@@ -27,16 +27,28 @@
             const clientDataContainer = document.getElementById('clientDataContainer');
             const clientNameInput = document.getElementById("clientName");
             const clientName = clientNameInput.value;
+            const phone1Input = document.getElementById("phone1");
+            const phone1 = phone1Input.value;
+            const phone2Input = document.getElementById("phone2");
+            const phone2 = phone2Input.value;
+            const phone3Input = document.getElementById("phone3");
+            const phone3 = phone3Input.value;
+            const addressInput = document.getElementById("address");
+            const address = addressInput.value;
             fetch('/api/client', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({name: clientName})
-             })
-                .then(response => response.json())
-                .then(client => clientDataContainer.innerHTML = 'Клиент создан: ' + JSON.stringify(client));
+                body: JSON.stringify({
+                    name: clientName,
+                    address: {street: address},
+                    phones: [{number: phone1}, {number: phone2}, {number: phone3}]
+                })
+            })
+                    .then(response => response.json())
+                    .then(client => clientDataContainer.innerHTML = 'Клиент создан: ' + JSON.stringify(client));
         }
     </script>
 </head>
@@ -48,6 +60,23 @@
     <div class="row">
         <label for="clientName">Name:</label>
         <input id="clientName" name="name" type="text" th:value="*{name}" value="John Doe"/>
+    </div>
+
+    <div class="row">
+        <label for="address">Address:</label>
+        <input id="address" name="address" type="text" value="Red Square, 1"/>
+    </div>
+    <div class="row">
+        <label for="phone1">Phone 1:</label>
+        <input id="phone1" name="phone1" type="text" value="+79111111111"/>
+    </div>
+    <div class="row">
+        <label for="phone2">Phone 2:</label>
+        <input id="phone2" name="phone2" type="text" value="+79111111111"/>
+    </div>
+    <div class="row">
+        <label for="phone3">Phone 3:</label>
+        <input id="phone3" name="phone3" type="text" value="+79111111111"/>
     </div>
 
     <div class="row">
