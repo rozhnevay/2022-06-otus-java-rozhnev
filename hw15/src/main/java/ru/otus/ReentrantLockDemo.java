@@ -37,11 +37,8 @@ public class ReentrantLockDemo {
                 try {
                     lock.lock();
                     num = increment ? ++num : --num;
-                    if (num == 10) {
+                    if (increment && num == 10 || !increment && num == 1) {
                         increment = !increment;
-                    }
-                    if (!increment && num == 0) {
-                        return;
                     }
                     logger.info(num.toString());
                     thread2Printed = false;
