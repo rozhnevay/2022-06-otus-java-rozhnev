@@ -33,6 +33,10 @@ allprojects {
             dependency("org.eclipse.jetty:jetty-io:${Versions.jetty}")
             dependency("org.eclipse.jetty:jetty-util:${Versions.jetty}")
             dependency("org.freemarker:freemarker:${Versions.freemarker}")
+
+            dependency("io.grpc:grpc-netty:${Versions.grpc}")
+            dependency("io.grpc:grpc-protobuf:${Versions.grpc}")
+            dependency("io.grpc:grpc-stub:${Versions.grpc}")
         }
     }
 }
