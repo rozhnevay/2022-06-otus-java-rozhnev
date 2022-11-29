@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Клиенты</title>
+</head>
+<body>
+<p>
+    <span text="Список клиентов"></span>
+</p>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+    </tr>
+    <tbody>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.id}">1</td>
+        <td th:text="${client.name}">John Doe</td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/client/create}" href="clientCreate.html">New client</a>
+</body>
+</html>
